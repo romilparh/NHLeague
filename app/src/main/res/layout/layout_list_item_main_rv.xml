@@ -7,15 +7,16 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circularImageViewMain"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_centerVertical="true"
         android:src="@mipmap/ic_launcher_round"/>
     
     <TextView
         android:id="@+id/textViewDataMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="10sp"
         android:layout_toRightOf="@+id/circularImageViewMain"
         android:textColor="#000"
         android:layout_centerVertical="true"

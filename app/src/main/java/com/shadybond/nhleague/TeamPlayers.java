@@ -1,7 +1,7 @@
 package com.shadybond.nhleague;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +32,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TeamPlayers extends AppCompatActivity {
 
@@ -59,6 +64,91 @@ public class TeamPlayers extends AppCompatActivity {
         Intent intent = getIntent();
         this.idTeam = intent.getExtras().getInt("id");
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.layout_action_bar);
+        View view =getSupportActionBar().getCustomView();
+
+        ImageButton imageButtonNameSort= (ImageButton)view.findViewById(R.id.filter_by_name);
+
+        imageButtonNameSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Name",Toast.LENGTH_LONG).show();
+                sortByName();
+            }
+        });
+
+        ImageButton imageButtonNumberSort= (ImageButton)view.findViewById(R.id.filter_by_number);
+
+        imageButtonNumberSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Jersey",Toast.LENGTH_LONG).show();
+                sortByJerseyNumber();
+            }
+        });
+
+        ImageButton imageButtonLeftWing= (ImageButton)view.findViewById(R.id.filter_by_left_wing);
+
+        imageButtonLeftWing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Left Wing",Toast.LENGTH_LONG).show();
+                filterByPosition("Left Wing");
+            }
+        });
+
+        ImageButton imageButtonRightWing= (ImageButton)view.findViewById(R.id.filter_by_right_wing);
+
+        imageButtonRightWing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Right Wing",Toast.LENGTH_LONG).show();
+                filterByPosition("Right Wing");
+            }
+        });
+
+        ImageButton imageButtonCenter= (ImageButton)view.findViewById(R.id.filter_by_center);
+
+        imageButtonCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Center",Toast.LENGTH_LONG).show();
+                filterByPosition("Center");
+            }
+        });
+
+        ImageButton imageButtonDefenseman= (ImageButton)view.findViewById(R.id.filter_by_defenseman);
+
+        imageButtonDefenseman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Defense",Toast.LENGTH_LONG).show();
+                filterByPosition("Defenseman");
+            }
+        });
+
+        ImageButton imageButtonGoalie= (ImageButton)view.findViewById(R.id.filter_by_goalie);
+
+        imageButtonGoalie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort By Goalie",Toast.LENGTH_LONG).show();
+                filterByPosition("Goalie");
+            }
+        });
+
+        ImageButton imageButtonAll= (ImageButton)view.findViewById(R.id.show_all);
+
+        imageButtonAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Sort Default",Toast.LENGTH_LONG).show();
+                adapter.setPlayersData(playersNameDataList,playersJerseyNumberDataList,playersPositionDataList,idPlayer);
+            }
+        });
+
         setContentView(R.layout.activity_team_players);
 
         this.volleyTeamPlayersRequest("https://statsapi.web.nhl.com/api/v1/teams/");
@@ -66,27 +156,21 @@ public class TeamPlayers extends AppCompatActivity {
         this.initRecyclerView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        ArrayList<String> positions = this.returnPositions(this.playersPositionData);
-        for (int i = 0; i < positions.size(); i++) {
-            menu.add(0, i, 0,positions.get(i) ).setShortcut('5', 'c');
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        this.filterByPosition((String) item.getTitle());
-        return super.onOptionsItemSelected(item);
-    }
-
     // Sort Function through String Value
-    public LinkedHashMap<Integer, String> sortHashMapByValues(HashMap<Integer, String> passedMap) {
-        List<Integer> mapKeys = new ArrayList<>(passedMap.keySet());
-        List<String> mapValues = new ArrayList<>(passedMap.values());
-        Collections.sort(mapValues);
+    public LinkedHashMap<Integer, String> sortHashMapByValues(HashMap<Integer, String> passedMap, boolean isInt) {
+        ArrayList<Integer> mapKeys = new ArrayList<>(passedMap.keySet());
+        ArrayList<String> mapValues = new ArrayList<>(passedMap.values());
+        if(isInt == true) {
+            ArrayList<Integer> mapValuesInteger = getIntegerArray(mapValues);
+            Collections.sort(mapValuesInteger);
+            mapValues.clear();
+            for (int i = 0; i < mapValuesInteger.size(); i++) {
+                mapValues.add(String.valueOf(mapValuesInteger.get(i)));
+            }
+        }
+        else {
+            Collections.sort(mapValues);
+        }
         Collections.sort(mapKeys);
 
         LinkedHashMap<Integer, String> sortedMap =
@@ -112,6 +196,20 @@ public class TeamPlayers extends AppCompatActivity {
         return sortedMap;
     }
 
+    private ArrayList<Integer> getIntegerArray(ArrayList<String> stringArray) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for(String stringValue : stringArray) {
+            try {
+                //Convert String to Integer, and store it into integer array list.
+                result.add(Integer.parseInt(stringValue));
+            } catch(NumberFormatException nfe) {
+                //System.out.println("Could not parse " + nfe);
+                Log.w("NumberFormat", "Parsing failed! " + stringValue + " can not be an integer");
+            }
+        }
+        return result;
+    }
+
     // Query to fetch  and save data
     public void volleyTeamPlayersRequest(String url){
         url = url +String.valueOf(this.idTeam)+ "/roster";
@@ -131,13 +229,9 @@ public class TeamPlayers extends AppCompatActivity {
                                 try{
                                     jerseyNumber = roster.getString("jerseyNumber");
                                 }catch (Exception e){
-                                    jerseyNumber = "n/a";
+                                    jerseyNumber = "-1";
                                 }
-                                try{
-                                    positionName = position.getString("name");
-                                }catch (Exception e){
-                                    positionName = "n/a";
-                                }
+                                positionName = position.getString("name");
                                 Integer id = new Integer(person.getInt("id"));
                                 String name = person.getString("fullName");
 
@@ -167,15 +261,27 @@ public class TeamPlayers extends AppCompatActivity {
         VolleyRequestQueue.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,"Fetch Teams Players: ID, Name, position");
     }
 
+    public void clearData(){
+        try{
+            this.sortedPlayerPositionData.clear();
+            this.sortedPlayersJerseyNumberData.clear();
+            this.sortedPlayersNameData.clear();
+            this.nameSorted.removeAll(this.nameSorted);
+            this.jerseySorted.removeAll(this.jerseySorted);
+            this.positionSorted.removeAll(this.positionSorted);
+        } catch (Exception e){
+
+        }
+    }
+
     // Sort By Name function
     public void sortByName(){
         // Delete All previous data in sorted array lists
-        this.nameSorted.removeAll(this.nameSorted);
-        this.jerseySorted.removeAll(this.jerseySorted);
-        this.positionSorted.removeAll(this.positionSorted);
+        this.clearData();
+
         // Sort and Add new Data
             // use Name HashMap sort
-        this.sortedPlayersNameData = this.sortHashMapByValues(this.playersNameData);
+        this.sortedPlayersNameData = this.sortHashMapByValues(this.playersNameData,false);
         this.nameSorted = new ArrayList<>(this.sortedPlayersNameData.values());
         this.idPlayerSorted = new ArrayList<>(this.sortedPlayersNameData.keySet());
 
@@ -191,16 +297,11 @@ public class TeamPlayers extends AppCompatActivity {
 
     public void sortByJerseyNumber(){
         // Delete All previous data in sorted array lists
-        this.sortedPlayerPositionData.clear();
-        this.sortedPlayersJerseyNumberData.clear();
-        this.sortedPlayersNameData.clear();
-        this.nameSorted.removeAll(this.nameSorted);
-        this.jerseySorted.removeAll(this.jerseySorted);
-        this.positionSorted.removeAll(this.positionSorted);
+        this.clearData();
 
         // Sort and Add new Data
             // use jersey hashmap sort
-        this.sortedPlayersJerseyNumberData = this.sortHashMapByValues(this.playersJerseyNumberData);
+        this.sortedPlayersJerseyNumberData = this.sortHashMapByValues(this.playersJerseyNumberData,true);
         this.jerseySorted = new ArrayList<>(this.sortedPlayersJerseyNumberData.values());
         this.idPlayerSorted = new ArrayList<>(this.sortedPlayersJerseyNumberData.keySet());
 
@@ -209,30 +310,40 @@ public class TeamPlayers extends AppCompatActivity {
         this.positionSorted = this.sortArrayList(this.sortedPlayersJerseyNumberData,this.playersPositionData);
 
         // Push Data to RecyclerView
-        adapter.setPlayersData(this.nameSorted,this.jerseySorted,this.positionSorted,this.idPlayer);
+        adapter.setPlayersData(this.nameSorted,this.jerseySorted,this.positionSorted,this.idPlayerSorted);
     }
 
     public void filterByPosition(String position){
         // Delete All previous data in sorted array lists and Hash Maps
-        this.sortedPlayerPositionData.clear();
-        this.sortedPlayersJerseyNumberData.clear();
-        this.sortedPlayersNameData.clear();
-        this.nameSorted.removeAll(this.nameSorted);
-        this.jerseySorted.removeAll(this.jerseySorted);
-        this.positionSorted.removeAll(this.positionSorted);
+        this.clearData();
+
         // Sort and Add new Data
+        // use position hashmap sort
 
+        HashMap<Integer, String> object = new HashMap<Integer, String>();
 
+        for (Map.Entry<Integer, String> entry : this.playersPositionData.entrySet()) {
+            if (entry.getValue().equals(position)) {
+                object.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        this.positionSorted = new ArrayList<>(object.values());
+        this.idPlayerSorted = new ArrayList<>(object.keySet());
+
+        // sort name and jersey
+        this.nameSorted = this.sortArrayList(object,this.playersNameData);
+        this.jerseySorted = this.sortArrayList(object,this.playersJerseyNumberData);
 
         // Push Data to RecyclerView
-        adapter.setPlayersData(this.nameSorted,this.jerseySorted,this.positionSorted,this.idPlayer);
+        adapter.setPlayersData(this.nameSorted,this.jerseySorted,this.positionSorted,this.idPlayerSorted);
     }
 
     public ArrayList<String> sortArrayList(HashMap<Integer,String> sortedHashMap, HashMap<Integer,String> dataToBeSortedHashMap){
         ArrayList<String> sortedArrayList = new ArrayList<>();
         ArrayList<Integer> sortedHashMapSets = new ArrayList(sortedHashMap.keySet());
 
-        for(int i=0;i<sortedHashMapSets.size();i++){
+        for(int i=0;i<sortedHashMap.size();i++){
             sortedArrayList.add(dataToBeSortedHashMap.get(sortedHashMapSets.get(i)));
         }
         return sortedArrayList;

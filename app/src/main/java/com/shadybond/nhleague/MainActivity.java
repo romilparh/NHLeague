@@ -43,8 +43,19 @@ public class MainActivity extends AppCompatActivity{
                                 Integer id = new Integer(teamDetails.getInt("id"));
                                 String name = teamDetails.getString("name");
 
+                                /* This switch case can be used to manually setup any team image, as it is not given by the api itself
+                                    I set a custom image to show that image is fetched from a URL
+
+                                * switch(1){
+                                *   case "1":
+                                *       teamsData.add(new TeamsModel(id,name,"New Jersey Devils Image URL"));
+                                *       break;
+                                 *  default:
+                                * }
+                                * */
+
                                 // Wait here
-                                teamsData.add(new TeamsModel(id,name,"x"));
+                                teamsData.add(new TeamsModel(id,name,"https://i.imgur.com/TSSDczr.png"));
                             }
                             adapter.setTeamsData(teamsData);
                         } catch (JSONException e) {

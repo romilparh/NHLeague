@@ -2,7 +2,6 @@ package com.shadybond.nhleague.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.shadybond.nhleague.PlayerNationality;
 import com.shadybond.nhleague.R;
-import com.shadybond.nhleague.TeamPlayers;
 import java.util.ArrayList;
 
 public class TeamPlayersRVAdapter extends RecyclerView.Adapter<TeamPlayersRVAdapter.ViewHolder> {
