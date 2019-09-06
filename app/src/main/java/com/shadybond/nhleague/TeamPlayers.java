@@ -144,7 +144,7 @@ public class TeamPlayers extends AppCompatActivity {
         imageButtonAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Sort By Jersey",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Sort Default",Toast.LENGTH_LONG).show();
                 adapter.setPlayersData(playersNameDataList,playersJerseyNumberDataList,playersPositionDataList,idPlayer);
             }
         });
