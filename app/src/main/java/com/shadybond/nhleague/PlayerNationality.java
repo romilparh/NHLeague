@@ -3,18 +3,13 @@ package com.shadybond.nhleague;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.shadybond.nhleague.Adapters.PlayerNationalityRVAdapter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +47,21 @@ public class PlayerNationality extends AppCompatActivity {
                                 JSONObject teamDetails = jsonArray.getJSONObject(i);
                                 String name = teamDetails.getString("nationality");
                                 nationalityName.add(name);
+
+                                /* This switch case can be used to manually setup any flag image, as it is not given by the api itself
+                                    I set a custom image to show that image is fetched from a URL
+
+                                * switch(name){
+                                *   case 'CAD':
+                                *       urlImage.add("Canadian Flag Image URL");
+                                *       break;
+                                *   case 'USA':
+                                *       urlImage.add("Canadian Flag Image URL");
+                                 *      break;
+                                 *  default:
+                                * }
+                                * */
+
                                 urlImage.add("https://i.imgur.com/TSSDczr.png");
                             }
                             adapter.setNationalityData(urlImage,nationalityName);

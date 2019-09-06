@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:id="@+id/filter_by_right_wing"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/filter_by_left_wing"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:id="@+id/filter_by_center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/filter_by_goalie"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:id="@+id/filter_by_defenseman"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:id="@+id/show_all"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:id="@+id/filter_by_name"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+
+        <ImageButton
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/filter_by_number"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10sp"/>
+
+
+    </TableRow>
+
+</TableLayout>
