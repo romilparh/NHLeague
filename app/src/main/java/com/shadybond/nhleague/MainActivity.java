@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
                                 String name = teamDetails.getString("name");
 
                                 // Wait here
-                                teamsData.add(new TeamsModel(id,name,"x"));
+                                teamsData.add(new TeamsModel(id,name,"https://i.imgur.com/TSSDczr.png"));
                             }
                             adapter.setTeamsData(teamsData);
                         } catch (JSONException e) {

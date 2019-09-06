@@ -52,7 +52,7 @@ public class PlayerNationality extends AppCompatActivity {
                                 JSONObject teamDetails = jsonArray.getJSONObject(i);
                                 String name = teamDetails.getString("nationality");
                                 nationalityName.add(name);
-                                urlImage.add("");
+                                urlImage.add("https://i.imgur.com/TSSDczr.png");
                             }
                             adapter.setNationalityData(urlImage,nationalityName);
                         } catch (JSONException e) {

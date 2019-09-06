@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
+    android:padding="15sp"
     android:id="@+id/relativeLayoutDataPlayers">
 
     <TextView
         android:id="@+id/textViewJerseyNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="10sp"
+        android:layout_centerVertical="true"
         android:textColor="#000"
         android:layout_marginLeft="30sp"/>
 
@@ -17,7 +18,8 @@
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="10sp"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/textViewJerseyNumber"
         android:textColor="#000"
         android:layout_marginLeft="30sp"/>
@@ -26,7 +28,8 @@
         android:id="@+id/textViewPosition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="10sp"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/textViewName"
         android:textColor="#000"
         android:layout_marginLeft="30sp"/>
